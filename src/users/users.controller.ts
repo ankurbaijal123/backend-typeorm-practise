@@ -2,6 +2,9 @@ import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, Put } from '@n
 import { CreateUserDto } from './dtos/CreateUser.dto';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dtos/updateUser.dto';
+import { create } from 'domain';
+import { UserProfileDto } from './dtos/createUserProfile.dto';
+import { CreateUserPostDto } from './dtos/CreateUserPost.dto';
 
 @Controller('users')
 export class UsersController {
@@ -29,5 +32,15 @@ export class UsersController {
         
         const updatedUserDeatils = this.UserService.updateUserById(id, updateUserDto);
         return updatedUserDeatils
+    }
+
+    @Post(':id/profiles')
+    createUserprofile(@Param ('id', ParseIntPipe )id: number, @Body() createProfileDto: UserProfileDto) {
+        return this.UserService.createProfile(id, createProfileDto);
+    }
+
+    @Post(':id/posts')
+    createUserPost(@Param ('id', ParseIntPipe )id: number, @Body() createUserPost: CreateUserPostDto) {
+        return this.UserService.createUserPost(id, createUserPost);
     }
 }
